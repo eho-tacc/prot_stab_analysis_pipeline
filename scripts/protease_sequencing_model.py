@@ -24,8 +24,8 @@ import scipy.stats
 import scipy.optimize
 
 from pymc3.distributions import Continuous
-from pymc3.distributions.continuous import get_tau_sd
-from pymc3.distributions.continuous import bound
+from pymc3.distributions.mixture import get_tau_sd
+from pymc3.distributions.mixture import bound
 
 from utility import resolve_subclass, SubclassName
 

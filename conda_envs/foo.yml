@@ -1,0 +1,21 @@
+name: 2018_prot_stab_compute_ec50_values
+dependencies:
+    - pip
+    - biopython
+    - joblib
+    - matplotlib
+    - seaborn
+    - mkl
+    - mkl-service
+    - numpy
+    - pandas=0.23
+    - pymc3
+    - scikit-learn
+    - scipy
+    - theano
+    - traitlets
+    - pyqt
+    - pip:
+        - flowcytometrytools
+        - pytest
+
