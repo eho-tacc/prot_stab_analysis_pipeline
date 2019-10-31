@@ -1,0 +1,23 @@
+name: ipynb_env
+dependencies:
+    - defusedxml=0.5.0
+    - attrs=17.2.0
+    - numpy
+    - scipy=0.19.1
+    - matplotlib
+    - scikit-learn
+    - pandas=0.23
+    - seaborn
+    - biopython
+    - pymc3=3.2
+    - theano=1.0.1
+    - traitlets
+    - jupyter
+    - mkl
+    - nbconvert
+    - pytest
+    - joblib
+    - mkl=2017
+    - mkl-service
+    - pymc3=3.0
+    - pyqt=4
