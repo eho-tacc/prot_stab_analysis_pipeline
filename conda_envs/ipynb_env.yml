@@ -1,5 +1,6 @@
 name: ipynb_env
 dependencies:
+    - python=2.7
     - defusedxml=0.5.0
     - attrs=17.2.0
     - numpy
