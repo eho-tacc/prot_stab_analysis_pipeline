@@ -8,6 +8,7 @@ import sys
 import argparse
 import pandas
 import numpy as np
+from attrdict import AttrDict
 import glob
 import sequence_protease_susceptibility
 from sequence_protease_susceptibility import CenterLimitedPSSMModel
@@ -22,6 +23,7 @@ def model_from_df(df):
     """
     Get parameters for the unfolded-state model from an input dataframe
     """
+    
     # Make a list of characters and numbers with most amino acids and some non-
     # amino-acid characters
     aa_nums = list(range(21))
@@ -48,19 +50,10 @@ def model_from_df(df):
     return blank_model
 
 # Run the main code
-def main():
+def main(kwargs):
     """Read in command-line arguments and run the main code of the script"""
-
-    # Read in command-line arguments using `argparse`
-    parser = argparse.ArgumentParser(description="Compute stability scores from EC50 values")
-    parser.add_argument("designed_sequences_file", help="a file with design names and sequences")
-    parser.add_argument("protease", help="the relevant protease that will be used to compute predicted unfolded-state EC50 values, must be either 'trypsin' or 'chymotrypsin'")
-    parser.add_argument("ec50_values_file", help="a file with ec50 values in a matrix with tab-delimited columns")
-    parser.add_argument("conc_factor", help="the fold-change in protease concentration between selection steps (integer)", type=int)
-    parser.add_argument("output_file", help="a path to an output file where the results will be stored. The directories in this path must already exist.")
-    parser.add_argument("--protein_or_dna_level", default='protein', help="whether `designed_sequences_file` contains DNA or protein sequences. Options are: 'protein' or 'dna'. Default is: 'protein'")
-
-    args = parser.parse_args()
+    
+    args = AttrDict(kwargs)
 
     # Assign command-line arguments to variables
     designed_sequences_file = args.designed_sequences_file
@@ -175,5 +168,20 @@ def main():
     print("Writing the results to the file: {0}".format(output_file))
     stability_scores_df.to_csv(output_file, sep='\t')
 
+    
+def get_clargs():
+    # Read in command-line arguments using `argparse`
+    parser = argparse.ArgumentParser(description="Compute stability scores from EC50 values")
+    parser.add_argument("designed_sequences_file", help="a file with design names and sequences")
+    parser.add_argument("protease", help="the relevant protease that will be used to compute predicted unfolded-state EC50 values, must be either 'trypsin' or 'chymotrypsin'")
+    parser.add_argument("ec50_values_file", help="a file with ec50 values in a matrix with tab-delimited columns")
+    parser.add_argument("conc_factor", help="the fold-change in protease concentration between selection steps (integer)", type=int)
+    parser.add_argument("output_file", help="a path to an output file where the results will be stored. The directories in this path must already exist.")
+    parser.add_argument("--protein_or_dna_level", default='protein', help="whether `designed_sequences_file` contains DNA or protein sequences. Options are: 'protein' or 'dna'. Default is: 'protein'")
+    args = parser.parse_args()
+    return args
+
+
 if __name__ == "__main__":
-    main()
+    clargs = get_clargs()
+    main(clargs)
