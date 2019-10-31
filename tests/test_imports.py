@@ -85,8 +85,8 @@ def test_protease_sequencing_model():
     import scipy.stats
     import scipy.optimize
     from pymc3.distributions import Continuous
-    from pymc3.distributions.mixture import get_tau_sd
-    from pymc3.distributions.mixture import bound
+    from pymc3.distributions.continuous import get_tau_sd
+    from pymc3.distributions.continuous import bound
 
 def test_sequence_protease_susceptibility():
     """sequence_protease_susceptibility.py"""
@@ -108,4 +108,3 @@ def test_utility():
     import traitlets
     from traitlets import TraitError
     import inspect
-
