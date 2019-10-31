@@ -11,6 +11,7 @@ import subprocess
 from multiprocessing import Pool
 import time
 import pandas
+from attrdict import AttrDict
 
 # Custom `Python` modules
 import deep_seq_utils
@@ -19,24 +20,11 @@ import deep_seq_utils
 scriptsdir = os.path.dirname(__file__)
 
 # Run the main code
-def main():
+def main(kwargs):
     """Read in command-line arguments and execute the main code"""
-
-    #---------------------------------------------------------------
-    # Read in command-line arguments and experimental metadata
-    #---------------------------------------------------------------
-    # Read in command-line arguments using `argparse`
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--designed_sequences_file", help="a file with design names and protein sequences")
-    parser.add_argument("--experimental_summary_file", help="a file with experimental metadata")
-    parser.add_argument("--fastq_dir", help="the path to a directory with input FASTQ files")
-    parser.add_argument("--pear_path", help="the path to the program `PEAR`")
-    parser.add_argument("--five_prime_flanking_seq", help="five-prime flanking sequence used to parse DNA coding sequences from deep-sequencing reads")
-    parser.add_argument("--three_prime_flanking_seq", help="three-prime flanking sequence used to parse DNA coding sequences from deep-sequencing reads")
-    parser.add_argument("--output_dir", help="a path to an output directory where all the results will be stored. This directory will be created if it does not already exist")
-    parser.add_argument("--protein_or_dna_level", default='protein', help="whether EC50 values should be computed at the protein or DNA level. Options are: 'protein' or 'dna'. Default is: 'protein'")
-    args = parser.parse_args()
-
+    
+    args = AttrDict(kwargs)
+    
     # Assign command-line arguments to variables
     designed_sequences_file = args.designed_sequences_file
     experimental_summary_file = args.experimental_summary_file
@@ -358,6 +346,25 @@ def main():
                 err = err.decode("utf-8")
                 f.write(err)
 
+                
+def get_clargs():
+    #---------------------------------------------------------------
+    # Read in command-line arguments and experimental metadata
+    #---------------------------------------------------------------
+    # Read in command-line arguments using `argparse`
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--designed_sequences_file", help="a file with design names and protein sequences")
+    parser.add_argument("--experimental_summary_file", help="a file with experimental metadata")
+    parser.add_argument("--fastq_dir", help="the path to a directory with input FASTQ files")
+    parser.add_argument("--pear_path", help="the path to the program `PEAR`")
+    parser.add_argument("--five_prime_flanking_seq", help="five-prime flanking sequence used to parse DNA coding sequences from deep-sequencing reads")
+    parser.add_argument("--three_prime_flanking_seq", help="three-prime flanking sequence used to parse DNA coding sequences from deep-sequencing reads")
+    parser.add_argument("--output_dir", help="a path to an output directory where all the results will be stored. This directory will be created if it does not already exist")
+    parser.add_argument("--protein_or_dna_level", default='protein', help="whether EC50 values should be computed at the protein or DNA level. Options are: 'protein' or 'dna'. Default is: 'protein'")
+    args = parser.parse_args()
+    return args
+
 
 if __name__ == "__main__":
-    main()
+    clargs = get_clargs()
+    main(clargs)
