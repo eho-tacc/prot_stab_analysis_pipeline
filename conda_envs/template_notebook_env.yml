@@ -31,4 +31,4 @@ dependencies:
     - agavepy==0.9.3
     - pytest
     - flowcytometrytools
-
+    - attrdict
